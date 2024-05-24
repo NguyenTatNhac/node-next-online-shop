@@ -1,9 +1,9 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
 
 var app = express();
 
@@ -16,8 +16,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 error
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.sendStatus(404);
 });
 
-module.exports = app;
+export default app;
