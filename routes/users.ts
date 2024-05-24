@@ -1,9 +1,9 @@
 import express from 'express';
 
-var router = express.Router();
+const router = express.Router()
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.json({
     users: 'Nhac Tat Nguyen'
   });
