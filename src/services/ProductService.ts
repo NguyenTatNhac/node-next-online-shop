@@ -3,7 +3,7 @@ import ProductRepository from '../repositories/ProductRepository';
 
 class ProductService {
   static async getAll(): Promise<Product[]> {
-    return [];
+    return ProductRepository.findAll();
   }
 
   static async addProduct(product: Product): Promise<Product> {

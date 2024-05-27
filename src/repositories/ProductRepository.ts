@@ -7,7 +7,11 @@ const Model = sequelize.model('Product') as ModelStatic<ProductModel>;
 
 class ProductRepository {
   static async create(product: Product): Promise<Product> {
-    return await Model.create(product);
+    return Model.create(product);
+  }
+
+  static async findAll(): Promise<Product[]> {
+    return Model.findAll();
   }
 }
 
