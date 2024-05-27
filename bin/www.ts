@@ -29,6 +29,9 @@ const server = http.createServer(app);
     await sequelize.authenticate();
     console.log('Connection to database has been established successfully.');
 
+    await sequelize.sync({ force: true });
+    console.log('The database has been synchronized successfully.');
+
     // Start the server
     server.listen(port);
     server.on('error', onError);
