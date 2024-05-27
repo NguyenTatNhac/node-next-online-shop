@@ -1,18 +1,13 @@
 import { Product } from '../types/ProductTypes';
+import ProductRepository from '../repositories/ProductRepository';
 
 class ProductService {
   static async getAll(): Promise<Product[]> {
-    return [
-      {
-        id: 'the first product',
-      },
-      {
-        id: 'the 2nd product',
-      },
-      {
-        id: 'the 3rd product',
-      },
-    ];
+    return [];
+  }
+
+  static async addProduct(product: Product): Promise<Product> {
+    return ProductRepository.create(product);
   }
 }
 

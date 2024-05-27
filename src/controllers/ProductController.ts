@@ -1,8 +1,19 @@
 import { Request, Response } from 'express';
 import ProductService from '../services/ProductService';
+import { Product } from '../types/ProductTypes';
 
 class ProductController {
-  static async addProduct(req: Request, res: Response) {}
+  static async addProduct(req: Request, res: Response) {
+    const product: Product = req.body;
+    try {
+      const addedProduct = await ProductService.addProduct(product);
+      res.json(addedProduct);
+    } catch (error: unknown) {
+      res.json({
+        error: error,
+      });
+    }
+  }
 
   static async getProduct(req: Request, res: Response) {
     res.json({
