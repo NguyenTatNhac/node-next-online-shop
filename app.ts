@@ -2,9 +2,9 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 
-import indexRouter from './routes/index';
-import usersRouter from './routes/users';
-import productsRouter from './routes/products';
+import indexRouter from './src/routes/index';
+import usersRouter from './src/routes/users';
+import productsRouter from './src/routes/products';
 
 const app = express();
 
