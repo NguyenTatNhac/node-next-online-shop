@@ -6,6 +6,7 @@
 
 import app from '../app';
 import http from 'http';
+import sequelize from '../src/sequelize';
 
 /**
  * Get port from environment and store in Express.
@@ -23,10 +24,19 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection to database has been established successfully.');
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+    // Start the server
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+})();
 
 /**
  * Normalize a port into a number, string, or false.
@@ -57,9 +67,7 @@ function onError(error: { syscall: string; code: string }) {
     throw error;
   }
 
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -82,8 +90,6 @@ function onError(error: { syscall: string; code: string }) {
 
 function onListening() {
   const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr?.port;
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port;
   console.log('Listening on ' + bind);
 }
