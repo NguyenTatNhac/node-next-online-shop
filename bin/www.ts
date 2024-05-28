@@ -7,6 +7,7 @@
 import app from '../app';
 import http from 'http';
 import sequelize from '../src/sequelize';
+import Logger from '../src/utils/Logger';
 
 /**
  * Get port from environment and store in Express.
@@ -27,18 +28,18 @@ const server = http.createServer(app);
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log('Connection to database has been established successfully.');
+    Logger.info('Connection to database has been established successfully.');
 
     // Todo: change the sync strategy before deploying to production
     await sequelize.sync({ alter: true });
-    console.log('The database has been synchronized successfully.');
+    Logger.info('The database has been synchronized successfully.');
 
     // Start the server
     server.listen(port);
     server.on('error', onError);
     server.on('listening', onListening);
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    Logger.error('Unable to connect to the database:', error);
   }
 })();
 
@@ -76,11 +77,11 @@ function onError(error: { syscall: string; code: string }) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+      Logger.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      Logger.error(bind + ' is already in use');
       process.exit(1);
       break;
     default:
@@ -95,5 +96,5 @@ function onError(error: { syscall: string; code: string }) {
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port;
-  console.log('Listening on ' + bind);
+  Logger.info('Listening on ' + bind);
 }
