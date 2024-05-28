@@ -9,6 +9,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
+    "express-validator": "^7.1.0",
     "http-errors": "^2.0.0",
     "pg": "^8.11.5",
     "pg-hstore": "^2.3.4",
