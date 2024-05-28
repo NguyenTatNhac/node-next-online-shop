@@ -54,7 +54,7 @@ class ProductController {
       productBody.id = productId;
       const updatedProduct = await ProductService.updateProduct(productBody);
       res.json(updatedProduct);
-    } catch (e: any) {
+    } catch (e: unknown) {
       if (e instanceof NotFoundError) {
         next(httpError.BadRequest('The product not found'));
       } else {
@@ -69,7 +69,7 @@ class ProductController {
     try {
       await ProductService.deleteProduct(productId);
       res.json({ message: 'Success' });
-    } catch (e: any) {
+    } catch (e: unknown) {
       next(e);
     }
   }
