@@ -26,6 +26,7 @@ productsRouter.get('/', ProductController.getAllProducts);
 productsRouter.put(
   '/:id',
   param('id').isNumeric(),
+  checkSchema(ProductSchema),
   validationResultHandler,
   ProductController.updateProduct,
 );

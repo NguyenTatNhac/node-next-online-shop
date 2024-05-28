@@ -13,6 +13,8 @@ type CreationAttrs = InferCreationAttributes<ProductModel>;
 export interface ProductModel extends Model<Attributes, CreationAttrs> {
   id: CreationOptional<number>;
   name: string;
+  imageUrl: string;
+  price: number;
 }
 
 export default (sequelize: Sequelize) => {
@@ -27,6 +29,14 @@ export default (sequelize: Sequelize) => {
       },
       name: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },

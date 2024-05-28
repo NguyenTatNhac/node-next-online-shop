@@ -1,4 +1,6 @@
 export type Product = {
-  id: number;
+  id: number | undefined;
   name: string;
+  imageUrl: string;
+  price: number;
 };
