@@ -1,6 +1,6 @@
 import { Product } from '../types/ProductTypes';
 import sequelize from '../sequelize';
-import { ProductModel } from '../sequelize/models/Product.model';
+import { ProductModel } from '../sequelize/models/ProductModel';
 import { ModelStatic } from 'sequelize';
 
 const Model = sequelize.model('Product') as ModelStatic<ProductModel>;

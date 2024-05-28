@@ -4,37 +4,37 @@ import { ProductSchema } from '../validations/ProductSchema';
 import { checkSchema, param } from 'express-validator';
 import validationResultHandler from '../middlewares/ValidationResultHandler';
 
-const router = express.Router();
+const productsRouter = express.Router();
 
 /* /products */
-router.post(
+productsRouter.post(
   '/',
   checkSchema(ProductSchema),
   validationResultHandler,
   ProductController.addProduct,
 );
 
-router.get(
+productsRouter.get(
   '/:id',
   param('id').isNumeric(),
   validationResultHandler,
   ProductController.getProduct,
 );
 
-router.get('/', ProductController.getAllProducts);
+productsRouter.get('/', ProductController.getAllProducts);
 
-router.put(
+productsRouter.put(
   '/:id',
   param('id').isNumeric(),
   validationResultHandler,
   ProductController.updateProduct,
 );
 
-router.delete(
+productsRouter.delete(
   '/:id',
   param('id').isNumeric(),
   validationResultHandler,
   ProductController.deleteProduct,
 );
 
-export default router;
+export default productsRouter;

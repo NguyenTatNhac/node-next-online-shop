@@ -1,5 +1,5 @@
 import { Dialect, Sequelize } from 'sequelize';
-import ProductModel from './models/Product.model';
+import ProductModel from './models/ProductModel';
 
 const { DB_NAME = '', DB_USERNAME = '', DB_PASSWORD, DB_HOST } = process.env;
 
