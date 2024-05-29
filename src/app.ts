@@ -1,9 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import productsRouter from './src/routes/ProductRouter';
+import productsRouter from './routes/ProductRouter';
 import httpError from 'http-errors';
-import Logger from './src/utils/Logger';
+import Logger from './utils/Logger';
 
 const app = express();
 
