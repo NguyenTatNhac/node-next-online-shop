@@ -12,7 +12,6 @@ import Logger from '../src/utils/Logger';
 /**
  * Get port from environment and store in Express.
  */
-
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
@@ -29,17 +28,26 @@ const server = http.createServer(app);
   try {
     await sequelize.authenticate();
     Logger.info('Connection to database has been established successfully.');
+  } catch (error) {
+    Logger.error('Unable to connect to the database', error);
+    return;
+  }
 
+  try {
     // Todo: change the sync strategy before deploying to production
     await sequelize.sync({ alter: true });
     Logger.info('The database has been synchronized successfully.');
+  } catch (error) {
+    Logger.error('Unable to sync the database', error);
+    return;
+  }
 
-    // Start the server
+  try {
     server.listen(port);
     server.on('error', onError);
     server.on('listening', onListening);
   } catch (error) {
-    Logger.error('Unable to connect to the database:', error);
+    Logger.error('Unable to start the server', error);
   }
 })();
 

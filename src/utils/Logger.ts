@@ -1,22 +1,32 @@
 import winston from 'winston';
 import { isProdEnv } from './Utilities';
 
-const customLevels = {
+type LogLevel = 'TRACE' | 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'FATAL';
+type CustomLevels = {
   levels: {
-    trace: 5,
-    debug: 4,
-    info: 3,
-    warn: 2,
-    error: 1,
-    fatal: 0,
+    [K in LogLevel]: number;
+  };
+  colors: {
+    [K in LogLevel]: string;
+  };
+};
+
+const customLevels: CustomLevels = {
+  levels: {
+    TRACE: 5,
+    DEBUG: 4,
+    INFO: 3,
+    WARN: 2,
+    ERROR: 1,
+    FATAL: 0,
   },
   colors: {
-    trace: 'white',
-    debug: 'green',
-    info: 'green',
-    warn: 'yellow',
-    error: 'red',
-    fatal: 'red',
+    TRACE: 'white',
+    DEBUG: 'green',
+    INFO: 'green',
+    WARN: 'yellow',
+    ERROR: 'red',
+    FATAL: 'red',
   },
 };
 
@@ -35,43 +45,39 @@ const formatter = winston.format.combine(
 
 const prodTransport = new winston.transports.File({
   filename: 'logs/error.log',
-  level: 'error',
+  level: 'ERROR',
 });
 
 const consoleTransport = new winston.transports.Console({
   format: formatter,
-  level: 'info',
+  level: 'INFO',
 });
 
 const logger = winston.createLogger({
-  level: isProdEnv() ? 'error' : 'info',
+  level: isProdEnv() ? 'ERROR' : 'INFO',
   levels: customLevels.levels,
   transports: [isProdEnv() ? prodTransport : consoleTransport],
 });
 winston.addColors(customLevels.colors);
 
-export default class Logger {
-  static trace(msg: string, meta?: never) {
-    logger.log('trace', msg, meta);
-  }
+/* We forward the "any" "meta" to Winston, therefore "any" is needed */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LogFn = (message: string, ...meta: any[]) => void;
+const getLogFn = (level: LogLevel): LogFn => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (message: string, ...meta: any[]) => {
+    logger.log(level, message, meta);
+  };
+};
 
-  static debug(msg: string, meta?: never) {
-    logger.debug(msg, meta);
-  }
-
-  static info(msg: string, meta?: never) {
-    logger.info(msg, meta);
-  }
-
-  static warn(msg: string, meta?: never) {
-    logger.warn(msg, meta);
-  }
-
-  static error(msg: string, meta?: unknown) {
-    logger.error(msg, meta);
-  }
-
-  static fatal(msg: string, meta?: never) {
-    logger.log('fatal', msg, meta);
-  }
-}
+/* Export an object with our own definition, instead of export the "logger"
+ * object from Winston. This will hide all the unnecessary functions from
+ * Winston logger. */
+export default {
+  trace: getLogFn('TRACE'),
+  debug: getLogFn('DEBUG'),
+  info: getLogFn('INFO'),
+  warn: getLogFn('WARN'),
+  error: getLogFn('ERROR'),
+  fatal: getLogFn('FATAL'),
+};
