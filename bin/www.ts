@@ -6,7 +6,7 @@
 
 import app from '../src/app';
 import http from 'http';
-import sequelize from '../src/sequelize';
+import sequelize from '../src/sequelize/Sequelize';
 import Logger from '../src/utils/Logger';
 
 /**
@@ -35,7 +35,7 @@ const server = http.createServer(app);
 
   try {
     // Todo: change the sync strategy before deploying to production
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ force: true });
     Logger.info('The database has been synchronized successfully.');
   } catch (error) {
     Logger.error('Unable to sync the database', error);

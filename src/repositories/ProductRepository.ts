@@ -1,5 +1,5 @@
 import { Product } from '../types/ProductTypes';
-import sequelize from '../sequelize';
+import sequelize from '../sequelize/Sequelize';
 import { ProductModel } from '../sequelize/models/ProductModel';
 import { ModelStatic } from 'sequelize';
 import ProductMapper from '../mapper/ProductMapper';

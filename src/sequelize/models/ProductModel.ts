@@ -2,24 +2,27 @@ import {
   DataTypes,
   Sequelize,
   Model,
-  CreationOptional,
   InferAttributes,
   InferCreationAttributes,
+  CreationOptional,
+  BelongsToGetAssociationMixin,
 } from 'sequelize';
+import { UserModel } from './UserModel';
 
-// Just some split for code readability
-type Attributes = InferAttributes<ProductModel>;
-type CreationAttrs = InferCreationAttributes<ProductModel>;
-export interface ProductModel extends Model<Attributes, CreationAttrs> {
-  id: CreationOptional<number>;
-  name: string;
-  imageUrl: string;
-  price: number;
+export class ProductModel extends Model<
+  InferAttributes<ProductModel>,
+  InferCreationAttributes<ProductModel>
+> {
+  declare id: CreationOptional<number>;
+  declare name: string;
+  declare imageUrl: string;
+  declare price: number;
+
+  declare getUser: BelongsToGetAssociationMixin<UserModel>;
 }
 
 export default (sequelize: Sequelize) => {
-  sequelize.define<ProductModel>(
-    'Product',
+  ProductModel.init(
     {
       id: {
         type: DataTypes.BIGINT,
@@ -41,6 +44,8 @@ export default (sequelize: Sequelize) => {
       },
     },
     {
+      sequelize,
+      modelName: 'Product',
       tableName: 'products',
     },
   );
