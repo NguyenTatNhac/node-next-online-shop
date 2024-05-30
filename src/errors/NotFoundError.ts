@@ -1,6 +1,8 @@
-export default class NotFoundError extends Error {
+class NotFoundError extends Error {
   constructor() {
     super();
     this.name = 'NotFoundError';
   }
 }
+
+export default NotFoundError;

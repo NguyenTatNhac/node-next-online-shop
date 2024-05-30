@@ -6,6 +6,7 @@ import {
   InferCreationAttributes,
   BelongsToManyGetAssociationsMixin,
   HasManyGetAssociationsMixin,
+  CreationOptional,
 } from 'sequelize';
 import { RoleModel } from './RoleModel';
 import { ProductModel } from './ProductModel';
@@ -15,7 +16,7 @@ export class UserModel extends Model<
   InferCreationAttributes<UserModel>
 > {
   // Attributes
-  declare id: string;
+  declare id: CreationOptional<number>;
   declare email: string;
   declare hashedPassword: string;
   declare firstName: string;
@@ -33,6 +34,7 @@ export default (sequelize: Sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
       },
       email: {
         type: DataTypes.STRING,

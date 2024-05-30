@@ -35,7 +35,7 @@ const server = http.createServer(app);
 
   try {
     // Todo: change the sync strategy before deploying to production
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ alter: true });
     Logger.info('The database has been synchronized successfully.');
   } catch (error) {
     Logger.error('Unable to sync the database', error);

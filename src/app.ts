@@ -1,9 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import productsRouter from './routes/ProductRouter';
 import httpError from 'http-errors';
 import Logger from './utils/Logger';
+import productsRouter from './routes/ProductsRouter';
+import usersRouter from './routes/UsersRouter';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Router definition
 app.use('/products', productsRouter);
+app.use('/users', usersRouter);
 
 // catch 404 error
 app.use((_req, res, next) => {
