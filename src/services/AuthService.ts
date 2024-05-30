@@ -2,8 +2,16 @@ import bcrypt from 'bcrypt';
 import { User } from '../types/UserTypes';
 import UserRepository from '../repositories/UserRepository';
 import AlreadyExistsError from '../errors/AlreadyExistsError';
+import WrongCredentialsError from '../errors/WrongCredentialsError';
+import { JwtPayload } from '../types/JWT';
+import jwt from 'jsonwebtoken';
 
-class UserService {
+type LoginData = {
+  email: string;
+  password: string;
+};
+
+class AuthService {
   static async registerUser(user: User): Promise<User> {
     const { email } = user;
     // Cast the password to string, since we validated in the controller
@@ -24,6 +32,26 @@ class UserService {
       password: hashedPassword,
     });
   }
+
+  static async loginUser({ email, password }: LoginData): Promise<string> {
+    const user = await UserRepository.findByEmail(email);
+
+    if (user === null) {
+      throw new WrongCredentialsError();
+    }
+
+    const { id, hashedPassword } = user;
+    const passwordMatched = await bcrypt.compare(password, hashedPassword);
+    if (!passwordMatched) {
+      throw new WrongCredentialsError();
+    }
+
+    const jwtSecret = process.env.JWT_SECRET_KEY ?? '';
+    const payload: JwtPayload = { id, email };
+    return jwt.sign(payload, jwtSecret, {
+      expiresIn: '30d',
+    });
+  }
 }
 
-export default UserService;
+export default AuthService;

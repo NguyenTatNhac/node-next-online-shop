@@ -37,3 +37,17 @@ export const RegisterUserSchema: Schema = {
     errorMessage: 'Repeat password does not match',
   },
 };
+
+export const LoginUserSchema: Schema = {
+  email: {
+    in: 'body',
+    trim: true,
+    isEmail: true,
+    errorMessage: 'Invalid email',
+  },
+  password: {
+    in: 'body',
+    notEmpty: true,
+    errorMessage: 'Wrong password',
+  },
+};

@@ -6,14 +6,12 @@ import { User } from '../types/UserTypes';
 const Model = sequelize.model('User') as ModelStatic<UserModel>;
 
 class UserRepository {
-  static async findByEmail(email: string): Promise<User | null> {
-    const found = await Model.findOne({
+  static async findByEmail(email: string): Promise<UserModel | null> {
+    return Model.findOne({
       where: {
         email,
       },
     });
-
-    return found !== null ? found : null;
   }
 
   static async createUser(user: User): Promise<User> {
