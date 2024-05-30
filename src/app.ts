@@ -3,8 +3,8 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import httpError from 'http-errors';
 import Logger from './utils/Logger';
+import authRouter from './routes/AuthRouter';
 import productsRouter from './routes/ProductsRouter';
-import usersRouter from './routes/UsersRouter';
 
 const app = express();
 
@@ -14,8 +14,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Router definition
+app.use('/auth', authRouter);
 app.use('/products', productsRouter);
-app.use('/users', usersRouter);
 
 // catch 404 error
 app.use((_req, res, next) => {

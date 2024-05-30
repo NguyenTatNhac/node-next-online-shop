@@ -4,7 +4,7 @@ import { User } from '../types/UserTypes';
 import AlreadyExistsError from '../errors/AlreadyExistsError';
 import httpError from 'http-errors';
 
-class UserController {
+class AuthController {
   static async registerUser(req: Request, res: Response, next: NextFunction) {
     try {
       const user: User = req.body;
@@ -20,4 +20,4 @@ class UserController {
   }
 }
 
-export default UserController;
+export default AuthController;
