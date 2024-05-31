@@ -5,6 +5,7 @@ import httpError from 'http-errors';
 import Logger from './utils/Logger';
 import authRouter from './routes/AuthRouter';
 import productsRouter from './routes/ProductsRouter';
+import rolesRouter from './routes/RolesRouter';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Router definition
 app.use('/auth', authRouter);
 app.use('/products', productsRouter);
+app.use('/roles', rolesRouter);
 
 // catch 404 error
 app.use((_req, res, next) => {

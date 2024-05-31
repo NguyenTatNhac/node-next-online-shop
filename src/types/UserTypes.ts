@@ -8,3 +8,7 @@ export type User = {
   password?: string;
   repeatedPassword?: string;
 };
+
+export enum UserRole {
+  ADMIN = 'ADMIN',
+}

@@ -7,9 +7,11 @@ import {
   BelongsToManyGetAssociationsMixin,
   HasManyGetAssociationsMixin,
   CreationOptional,
+  BelongsToManyAddAssociationMixin,
 } from 'sequelize';
 import { RoleModel } from './RoleModel';
 import { ProductModel } from './ProductModel';
+import { UserRole } from '../../types/UserTypes';
 
 export class UserModel extends Model<
   InferAttributes<UserModel>,
@@ -21,10 +23,12 @@ export class UserModel extends Model<
   declare hashedPassword: string;
   declare firstName: string;
   declare lastName: string;
+  declare Roles?: RoleModel[];
 
   // Mixins functions
   declare getProducts: HasManyGetAssociationsMixin<ProductModel>;
   declare getRoles: BelongsToManyGetAssociationsMixin<RoleModel>;
+  declare addRole: BelongsToManyAddAssociationMixin<RoleModel, UserRole>;
 }
 
 export default (sequelize: Sequelize) => {

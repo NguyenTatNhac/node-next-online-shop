@@ -7,12 +7,13 @@ import {
   BelongsToManyGetAssociationsMixin,
 } from 'sequelize';
 import { UserModel } from './UserModel';
+import { UserRole } from '../../types/UserTypes';
 
 export class RoleModel extends Model<
   InferAttributes<RoleModel>,
   InferCreationAttributes<RoleModel>
 > {
-  declare id: string;
+  declare id: UserRole;
   declare name: string;
   declare description: string | undefined;
 

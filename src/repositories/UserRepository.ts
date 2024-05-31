@@ -2,6 +2,7 @@ import sequelize from '../sequelize/Sequelize';
 import { UserModel } from '../sequelize/models/UserModel';
 import { ModelStatic } from 'sequelize';
 import { User } from '../types/UserTypes';
+import { RoleModel } from '../sequelize/models/RoleModel';
 
 const Model = sequelize.model('User') as ModelStatic<UserModel>;
 
@@ -30,6 +31,12 @@ class UserRepository {
 
   static findById(id: number) {
     return Model.findByPk(id);
+  }
+
+  static findByIdWithRoles(id: number) {
+    return Model.findByPk(id, {
+      include: RoleModel,
+    });
   }
 }
 
