@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node --env-file=.env -r ts-node/register ./bin/www",
     "dev": "nodemon --env-file=.env.development --ext ts --ignore '*.test.ts' ./bin/www",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "tsc"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

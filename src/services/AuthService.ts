@@ -4,7 +4,7 @@ import UserRepository from '../repositories/UserRepository';
 import AlreadyExistsError from '../errors/AlreadyExistsError';
 import WrongCredentialsError from '../errors/WrongCredentialsError';
 import { JwtPayload } from '../types/JWT';
-import jwt from 'jsonwebtoken';
+import JwtService from './JwtService';
 
 type LoginData = {
   email: string;
@@ -45,12 +45,8 @@ class AuthService {
     if (!passwordMatched) {
       throw new WrongCredentialsError();
     }
-
-    const jwtSecret = process.env.JWT_SECRET_KEY ?? '';
     const payload: JwtPayload = { id, email };
-    return jwt.sign(payload, jwtSecret, {
-      expiresIn: '30d',
-    });
+    return JwtService.sign(payload);
   }
 }
 

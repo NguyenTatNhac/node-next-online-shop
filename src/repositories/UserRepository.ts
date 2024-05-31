@@ -27,6 +27,10 @@ class UserRepository {
     const { id, email, firstName, lastName } = createdUser;
     return { id, email, firstName, lastName };
   }
+
+  static findById(id: number) {
+    return Model.findByPk(id);
+  }
 }
 
 export default UserRepository;
